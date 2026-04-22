@@ -429,9 +429,19 @@ export default function App() {
           <h1 className="font-display font-extrabold text-5xl md:text-7xl lg:text-8xl tracking-tight leading-[0.9] text-transparent bg-clip-text bg-linear-to-br from-teal via-emerald-300 to-teal mb-6">
             Grade Calculator
           </h1>
-          <p className="text-xs md:text-sm font-medium tracking-[0.4em] uppercase text-white/40 max-w-lg mx-auto">
+          <p className="text-xs md:text-sm font-medium tracking-[0.4em] uppercase text-white/40 max-w-lg mx-auto mb-6">
             Semester 4 &bull; Chitkara University
           </p>
+          <div className="flex items-center justify-center gap-4">
+            <span className="text-[10px] tracking-widest uppercase opacity-30 font-bold">Connect</span>
+            <div className="w-8 h-[1px] bg-white/10" />
+            <a href="https://www.linkedin.com/in/raisahib08/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-white/50 hover:text-[#0077b5] transition-all hover:scale-110">
+              <Linkedin className="w-4 h-4" />
+            </a>
+            <a href="https://www.instagram.com/_raisahib08/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-white/50 hover:text-[#E1306C] transition-all hover:scale-110">
+              <Instagram className="w-4 h-4" />
+            </a>
+          </div>
         </header>
 
         <main className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-12 items-start">

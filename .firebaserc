@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "cgpa-calculator-539a5"
+  },
+  "targets": {
+    "cgpa-calculator-539a5": {
+      "hosting": {
+        "check-kro-cgpa": [
+          "check-kro-cgpa"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
