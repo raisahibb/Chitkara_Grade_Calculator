@@ -9,7 +9,9 @@ import {
   Trophy, 
   ChevronRight,
   BookOpen,
-  Award
+  Award,
+  Linkedin,
+  Instagram
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -605,10 +607,20 @@ export default function App() {
         </main>
 
         {/* FOOTER */}
-        <footer className="mt-32 pt-10 border-t border-white/5 text-center">
-          <p className="text-[10px] tracking-[0.3em] uppercase opacity-30">
+        <footer className="mt-32 pt-10 border-t border-white/5 text-center pb-12">
+          <p className="text-[10px] tracking-[0.3em] uppercase opacity-40 mb-6">
             Crafted with Laptop Owned by <span className="text-teal opacity-100 font-bold">Rai Sahib</span>
           </p>
+          <div className="flex items-center justify-center gap-4">
+            <span className="text-[10px] tracking-widest uppercase opacity-30 font-bold">Connect</span>
+            <div className="w-8 h-[1px] bg-white/10" />
+            <a href="https://www.linkedin.com/in/raisahib08/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-white/50 hover:text-[#0077b5] transition-all hover:scale-110">
+              <Linkedin className="w-4 h-4" />
+            </a>
+            <a href="https://www.instagram.com/_raisahib08/" target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white/5 hover:bg-white/10 border border-white/5 rounded-full text-white/50 hover:text-[#E1306C] transition-all hover:scale-110">
+              <Instagram className="w-4 h-4" />
+            </a>
+          </div>
         </footer>
       </div>
     </div>
