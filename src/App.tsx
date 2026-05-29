@@ -85,9 +85,8 @@ function calculateSubjectStats(subject: any) {
   } else if (subject.type === 'es') {
     const fa1 = Math.min(Number(subject.fa1) || 0, 20);
     const fa2 = Math.min(Number(subject.fa2) || 0, 20);
-    const et  = Math.min(Number(subject.et)  || 0, 50);
-    const etS = (et / 50) * 60;
-    finalScore = fa1 + fa2 + etS;
+    const et  = Math.min(Number(subject.et)  || 0, 60);
+    finalScore = fa1 + fa2 + et;
     tooltips = ['FA-1: 20%', 'FA-2: 20%', 'ET: 60%'];
   }
 
@@ -298,13 +297,13 @@ const SubjectCard = ({ subject, index, onUpdate, onToggle }: any) => {
               />
             </div>
             <div className="col-span-2">
-              <span className="field-label">End Term /50</span>
+              <span className="field-label">End Term /60</span>
               <input 
                 type="number" 
                 className="input-field py-2 text-base" 
                 placeholder="—" 
                 value={subject.et}
-                onChange={e => onUpdate(subject.id, 'et', clampVal(e.target.value, 50))} 
+                onChange={e => onUpdate(subject.id, 'et', clampVal(e.target.value, 60))} 
               />
             </div>
           </div>
