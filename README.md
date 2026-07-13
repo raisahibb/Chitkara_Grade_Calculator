@@ -8,6 +8,11 @@
 
 A beautifully designed, premium **Chitkara University Semester 4 SGPA & CGPA Calculator**. Built with React, Vite, and Tailwind CSS, this tool empowers students to precisely track their academic performance, featuring dynamic grade estimations, progress visualizations, and a stunning glassmorphism user interface.
 
+## 📖 Project Handbook
+
+For a detailed overview of the development journey, architecture, and core components of this project, please refer to the [Project Handbook](./Project_handbook.md).
+
+
 ## ✨ Features
 
 - **Subject-Specific Grading Logic**: Customized input fields based on subject type (`standard`, `integrated project (IP)`, `environmental sciences (ES)`).

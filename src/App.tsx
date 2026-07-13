@@ -12,7 +12,8 @@ import {
   BookOpen,
   Award,
   Linkedin,
-  Instagram
+  Instagram,
+  LogOut
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import studentsData from './students.json';
@@ -60,10 +61,15 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => voi
    HELPERS — ALL LOGIC UNCHANGED OR ADAPTED
    ===================== */
 function clampVal(raw: string, max: number): string {
-  if (raw === '' || raw === '-') return '';
-  const n = Number(raw);
+  let clean = raw.replace(/[^\d.]/g, '');
+  if (clean === '') return '';
+  if (clean.startsWith('.')) clean = '0' + clean;
+
+  const n = Number(clean);
   if (isNaN(n)) return '';
-  return String(Math.min(Math.max(n, 0), max));
+
+  if (n > max) return String(max);
+  return clean;
 }
 
 function getGradeInfo(finalScore: number) {
@@ -180,7 +186,11 @@ function ProgressRing({ value, max = 10, color, glow, label }: { value: number; 
   const sw = 9;
   const r = (size - sw) / 2;
   const circ = 2 * Math.PI * r;
-  const pct = max > 0 ? value / max : 0;
+  let pct = max > 0 ? value / max : 0;
+  // Make sure there is a visible gap for values that are not exactly 10, to account for rounded linecaps
+  if (value > 0 && value < max && pct > 0.95) {
+    pct = 0.95;
+  }
   const offset = circ - pct * circ;
 
   return (
@@ -295,7 +305,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
               <div key={field}>
                 <span className="field-label">{label} /{max}</span>
                 <input 
-                  type="number" 
+                  type="text" inputMode="decimal" 
                   className="input-field py-2 text-base" 
                   placeholder="—" 
                   value={subject[field] || ''}
@@ -306,7 +316,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
             <div className="col-span-2 mt-1">
               <span className="field-label">End Term /50</span>
               <input 
-                type="number" 
+                type="text" inputMode="decimal" 
                 className="input-field py-2 text-base" 
                 placeholder="—" 
                 value={subject.et || ''}
@@ -325,7 +335,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
               <div key={field}>
                 <span className="field-label">{label} /{max}</span>
                 <input 
-                  type="number" 
+                  type="text" inputMode="decimal" 
                   className="input-field py-2 text-base" 
                   placeholder="—" 
                   value={subject[field] || ''}
@@ -345,7 +355,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
               <div key={field}>
                 <span className="field-label">{label} /{max}</span>
                 <input 
-                  type="number" 
+                  type="text" inputMode="decimal" 
                   className="input-field py-2 text-base" 
                   placeholder="—" 
                   value={subject[field] || ''}
@@ -356,7 +366,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
             <div className="col-span-2 mt-1">
               <span className="field-label">End Term /60</span>
               <input 
-                type="number" 
+                type="text" inputMode="decimal" 
                 className="input-field py-2 text-base" 
                 placeholder="—" 
                 value={subject.et || ''}
@@ -371,7 +381,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
             <div className="col-span-2">
               <span className="field-label">Project Abstract & Synopsis /20</span>
               <input 
-                type="number" 
+                type="text" inputMode="decimal" 
                 className="input-field py-2 text-base" 
                 placeholder="—" 
                 value={subject.abstract || ''}
@@ -381,7 +391,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
             <div>
               <span className="field-label">Mid-Term /30</span>
               <input 
-                type="number" 
+                type="text" inputMode="decimal" 
                 className="input-field py-2 text-base" 
                 placeholder="—" 
                 value={subject.midterm || ''}
@@ -391,7 +401,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
             <div>
               <span className="field-label">End Term /50</span>
               <input 
-                type="number" 
+                type="text" inputMode="decimal" 
                 className="input-field py-2 text-base" 
                 placeholder="—" 
                 value={subject.endterm || ''}
@@ -406,7 +416,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
             <div>
               <span className="field-label">FA1 /25</span>
               <input 
-                type="number" 
+                type="text" inputMode="decimal" 
                 className="input-field py-2 text-base" 
                 placeholder="—" 
                 value={subject.fa1 || ''}
@@ -416,7 +426,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
             <div>
               <span className="field-label">FA2 /25</span>
               <input 
-                type="number" 
+                type="text" inputMode="decimal" 
                 className="input-field py-2 text-base" 
                 placeholder="—" 
                 value={subject.fa2 || ''}
@@ -426,7 +436,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
             <div className="col-span-2 mt-1">
               <span className="field-label">End Term /50</span>
               <input 
-                type="number" 
+                type="text" inputMode="decimal" 
                 className="input-field py-2 text-base" 
                 placeholder="—" 
                 value={subject.et || ''}
@@ -447,7 +457,7 @@ const SubjectCard = ({ subject, index, onUpdate, disabled }: any) => {
               <div key={field}>
                 <span className="field-label">{label} /{max}</span>
                 <input 
-                  type="number" 
+                  type="text" inputMode="decimal" 
                   className="input-field py-2 text-base" 
                   placeholder="—" 
                   value={subject[field] || ''}
@@ -551,7 +561,8 @@ export default function App() {
   }, [rollNumber]);
 
   const updateSemWise = (id: number, field: string, value: string) => {
-    const cleanValue = value.replace(/[^\d.]/g, '');
+    let cleanValue = value.replace(/[^\d.]/g, '');
+    if (cleanValue !== '' && Number(cleanValue) > 10) cleanValue = '10';
     setSemWise(semWise.map(s => s.id === id ? { ...s, [field]: cleanValue } : s));
   };
 
@@ -649,6 +660,16 @@ export default function App() {
             <span className="text-white/90 text-xs sm:text-sm font-semibold tracking-wide truncate max-w-[150px] sm:max-w-[200px]">
               {(studentsData as Record<string, string>)[rollNumber] || 'Guest Student'}
             </span>
+            <button
+              onClick={() => {
+                setRollNumber('');
+                sessionStorage.removeItem('chitkara_roll_no');
+              }}
+              className="ml-1 p-1 text-white/50 hover:text-red-400 hover:bg-white/10 rounded-full transition-all"
+              title="Logout"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
@@ -856,7 +877,9 @@ export default function App() {
             {/* PHASE 1 */}
             <section className="space-y-6">
               <div className="flex items-center gap-6">
-                <h2 className="text-2xl md:text-3xl font-display font-bold">Phase 1 (July – September)</h2>
+                <h2 className="text-2xl md:text-3xl font-display font-bold whitespace-nowrap">
+                  Phase 1 <span className="text-white/30 text-lg md:text-xl font-normal hidden sm:inline-block ml-2">(July – September)</span>
+                </h2>
                 <div className="h-[1px] flex-1 bg-linear-to-r from-white/20 to-transparent" />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
@@ -874,7 +897,9 @@ export default function App() {
             {/* PHASE 2 */}
             <section className="space-y-6">
               <div className="flex items-center gap-6">
-                <h2 className="text-2xl md:text-3xl font-display font-bold">Phase 2 (October – December)</h2>
+                <h2 className="text-2xl md:text-3xl font-display font-bold whitespace-nowrap">
+                  Phase 2 <span className="text-white/30 text-lg md:text-xl font-normal hidden sm:inline-block ml-2">(October – December)</span>
+                </h2>
                 <div className="h-[1px] flex-1 bg-linear-to-r from-white/20 to-transparent" />
               </div>
               
@@ -978,12 +1003,16 @@ export default function App() {
                       <span className="field-label">CGPA till Sem 4</span>
                       <div className="relative">
                         <input 
-                          type="number" 
+                          type="text" inputMode="decimal" 
                           step="0.01" 
                           className="input-field pr-12" 
                           placeholder="8.45"
                           value={quickCgpa}
-                          onChange={e => setQuickCgpa(e.target.value)} 
+                          onChange={e => {
+                            let val = e.target.value;
+                            if (val !== '' && Number(val) > 10) val = '10';
+                            setQuickCgpa(val);
+                          }} 
                         />
                         <Layout className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/20" />
                       </div>
@@ -1012,7 +1041,7 @@ export default function App() {
                         <div>
                           <span className="field-label">SGPA</span>
                           <input 
-                            type="number" 
+                            type="text" inputMode="decimal" 
                             step="0.01" 
                             className="input-field py-2 text-base" 
                             placeholder="—"
