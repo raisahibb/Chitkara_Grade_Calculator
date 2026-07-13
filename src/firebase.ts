@@ -1,12 +1,14 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAxMDHP8wTA21aJ-X3XyG-02K1K_051cqo",
-  authDomain: "cgpa-calculator-539a5.firebaseapp.com",
-  projectId: "cgpa-calculator-539a5",
-  storageBucket: "cgpa-calculator-539a5.firebasestorage.app",
-  messagingSenderId: "428873304521",
-  appId: "1:428873304521:web:2a65272852bb8434364018"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 export const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
